@@ -29,7 +29,7 @@ export default function ExpensesOutput({ expenses, expensesPeriod }) {
       date: new Date('2025-02-19'),
     },
     {
-      id: 'e4',
+      id: 'e5',
       description: 'Another book',
       amount: 18.59,
       date: new Date('2025-02-18'),
@@ -39,7 +39,7 @@ export default function ExpensesOutput({ expenses, expensesPeriod }) {
   return (
     <View>
       <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
-      <ExpensesList />
+      <ExpensesList expenses={DUMMY_EXPENSES} />
     </View>
   );
 }
