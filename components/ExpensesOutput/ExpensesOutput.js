@@ -35,6 +35,43 @@ export default function ExpensesOutput({ expenses, expensesPeriod }) {
       amount: 18.59,
       date: new Date('2025-02-18'),
     },
+    {
+      id: 'e6',
+      description: 'A pair of trousers',
+      amount: 89.29,
+      date: new Date('2025-01-05'),
+    },
+    {
+      id: 'e7',
+      description: 'Some bananas',
+      amount: 5.99,
+      date: new Date('2024-12-01'),
+    },
+    {
+      id: 'e8',
+      description: 'Books',
+      amount: 14.99,
+      date: new Date('2025-02-19'),
+    },
+    {
+      id: 'e9',
+      description: 'Another book',
+      amount: 18.59,
+      date: new Date('2025-02-18'),
+    },
+
+    {
+      id: 'e10',
+      description: 'Books',
+      amount: 14.99,
+      date: new Date('2025-02-19'),
+    },
+    {
+      id: 'e11',
+      description: 'Another book',
+      amount: 18.59,
+      date: new Date('2025-02-18'),
+    },
   ];
 
   return (
@@ -48,7 +85,9 @@ export default function ExpensesOutput({ expenses, expensesPeriod }) {
 const styles = {
   container: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
 };
