@@ -14,9 +14,17 @@ export default function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
-  function cancelHandler() {}
+  function deleteExpenseHandler() {
+    navigation.goBack();
+  }
 
-  function confirmHandler() {}
+  function cancelHandler() {
+    navigation.goBack();
+  }
+
+  function confirmHandler() {
+    navigation.goBack();
+  }
 
   return (
     <View style={styles.container}>
@@ -35,7 +43,7 @@ export default function ManageExpense({ route, navigation }) {
             icon='trash'
             color={GlobalStyles.colors.error500}
             size={36}
-            // onPress={deleteExpenseHandler}
+            onPress={deleteExpenseHandler}
           />
         </View>
       )}
