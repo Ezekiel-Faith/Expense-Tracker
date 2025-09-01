@@ -21,7 +21,14 @@ export default function ExpenseForm() {
           onchangeText: () => {},
         }}
       />
-      <Input label='Description' />
+      <Input
+        label='Description'
+        textInputConfig={{
+          multiline: true,
+          // autocapitalize: 'none',
+          //autoCorrect: false //default is true,
+        }}
+      />
     </View>
   );
 }
