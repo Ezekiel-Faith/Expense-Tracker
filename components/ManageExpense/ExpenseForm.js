@@ -3,11 +3,7 @@ import { Input } from './Input';
 import { useState } from 'react';
 import Button from '../UI/Button';
 
-export default function ExpenseForm({
-  submitButtonLabel,
-  onCancel,
-  submitHandler,
-}) {
+export default function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
   const [inputValue, setInputValues] = useState({
     amount: '',
     date: '',
@@ -21,6 +17,16 @@ export default function ExpenseForm({
         [inputIdentifier]: enteredAmount,
       };
     });
+  }
+
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValue.amount,
+      date: new Date(inputValue.date),
+      description: inputValue.description,
+    };
+
+    onSubmit(expenseData);
   }
 
   return (
