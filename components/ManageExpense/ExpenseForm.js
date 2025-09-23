@@ -3,6 +3,7 @@ import { Input } from './Input';
 import { useState } from 'react';
 import Button from '../UI/Button';
 import { getFormattedDate } from '../../util/date';
+import { GlobalStyles } from '../../constants/styles';
 
 export default function ExpenseForm({
   submitButtonLabel,
@@ -41,8 +42,11 @@ export default function ExpenseForm({
       description: inputs.description.value,
     };
 
-    const amountIsValid = isNaN(expenseData.amount) && expenseData.amount > 0;
-    const dateIsValid = expenseData.date.toString() !== 'Invalid date';
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
+    // const dateIsValid = expenseData.date.toString() !== 'Invalid date';
+    const dateIsValid =
+      expenseData.date instanceof Date && !isNaN(expenseData.date.getTime());
+
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
@@ -75,6 +79,7 @@ export default function ExpenseForm({
       <View style={styles.inputsRow}>
         <Input
           label='Amount'
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: 'decimal-pad',
             onChangeText: inputChangedHandler.bind(this, 'amount'),
@@ -84,6 +89,7 @@ export default function ExpenseForm({
         />
         <Input
           label='Date'
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
@@ -96,6 +102,7 @@ export default function ExpenseForm({
 
       <Input
         label='Description'
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           // autocapitalize: 'none',
@@ -106,7 +113,9 @@ export default function ExpenseForm({
       />
 
       {formIsInvalid && (
-        <Text>Invalid input values - please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid input values - please check your entered data!
+        </Text>
       )}
 
       <View style={styles.buttonsContainer}>
@@ -142,6 +151,12 @@ const styles = StyleSheet.create({
 
   rowInput: {
     flex: 1,
+  },
+
+  errorText: {
+    textAlign: 'center',
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
 
   buttonsContainer: {
