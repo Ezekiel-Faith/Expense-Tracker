@@ -85,7 +85,8 @@ function expensesReducer(state, action) {
       return [{ id, ...action.payload }, ...state];
 
     case 'SET':
-      return action.payload;
+      const inverted = action.payload.reverse();
+      return inverted;
 
     case 'UPDATE':
       const updatableExpenseIndex = state.findIndex(
