@@ -1,78 +1,79 @@
 import { createContext, useReducer } from 'react';
 
-const DUMMY_EXPENSES = [
-  {
-    id: 'e1',
-    description: 'A pair of shoes',
-    amount: 59.99,
-    date: new Date('2025-08-19'),
-  },
-  {
-    id: 'e2',
-    description: 'A pair of trousers',
-    amount: 89.29,
-    date: new Date('2025-08-23'),
-  },
-  {
-    id: 'e3',
-    description: 'Some bananas',
-    amount: 5.99,
-    date: new Date('2025-08-13'),
-  },
-  {
-    id: 'e4',
-    description: 'Books',
-    amount: 14.99,
-    date: new Date('2025-08-24'),
-  },
-  {
-    id: 'e5',
-    description: 'Another book',
-    amount: 18.59,
-    date: new Date('2025-08-15'),
-  },
-  {
-    id: 'e6',
-    description: 'A pair of trousers',
-    amount: 89.29,
-    date: new Date('2025-08-23'),
-  },
-  {
-    id: 'e7',
-    description: 'Some bananas',
-    amount: 5.99,
-    date: new Date('2025-08-13'),
-  },
-  {
-    id: 'e8',
-    description: 'Books',
-    amount: 14.99,
-    date: new Date('2025-08-24'),
-  },
-  {
-    id: 'e9',
-    description: 'Another book',
-    amount: 18.59,
-    date: new Date('2025-08-15'),
-  },
+// const DUMMY_EXPENSES = [
+//   {
+//     id: 'e1',
+//     description: 'A pair of shoes',
+//     amount: 59.99,
+//     date: new Date('2025-08-19'),
+//   },
+//   {
+//     id: 'e2',
+//     description: 'A pair of trousers',
+//     amount: 89.29,
+//     date: new Date('2025-08-23'),
+//   },
+//   {
+//     id: 'e3',
+//     description: 'Some bananas',
+//     amount: 5.99,
+//     date: new Date('2025-08-13'),
+//   },
+//   {
+//     id: 'e4',
+//     description: 'Books',
+//     amount: 14.99,
+//     date: new Date('2025-08-24'),
+//   },
+//   {
+//     id: 'e5',
+//     description: 'Another book',
+//     amount: 18.59,
+//     date: new Date('2025-08-15'),
+//   },
+//   {
+//     id: 'e6',
+//     description: 'A pair of trousers',
+//     amount: 89.29,
+//     date: new Date('2025-08-23'),
+//   },
+//   {
+//     id: 'e7',
+//     description: 'Some bananas',
+//     amount: 5.99,
+//     date: new Date('2025-08-13'),
+//   },
+//   {
+//     id: 'e8',
+//     description: 'Books',
+//     amount: 14.99,
+//     date: new Date('2025-08-24'),
+//   },
+//   {
+//     id: 'e9',
+//     description: 'Another book',
+//     amount: 18.59,
+//     date: new Date('2025-08-15'),
+//   },
 
-  {
-    id: 'e10',
-    description: 'Books',
-    amount: 14.99,
-    date: new Date('2025-08-24'),
-  },
-  {
-    id: 'e11',
-    description: 'Another book',
-    amount: 18.59,
-    date: new Date('2025-08-15'),
-  },
-];
+//   {
+//     id: 'e10',
+//     description: 'Books',
+//     amount: 14.99,
+//     date: new Date('2025-08-24'),
+//   },
+//   {
+//     id: 'e11',
+//     description: 'Another book',
+//     amount: 18.59,
+//     date: new Date('2025-08-15'),
+//   },
+// ];
 
 export const ExpensesContext = createContext({
   expenses: [],
   addExpense: ({ description, amount, date }) => {},
+  setExpenses: (expenses) => {},
   deleteExpense: (id) => {},
   updateExpense: (id, { description, amount, date }) => {},
 });
@@ -82,6 +83,9 @@ function expensesReducer(state, action) {
     case 'ADD':
       const id = new Date().toString() + Math.random().toString();
       return [{ id, ...action.payload }, ...state];
+
+    case 'SET':
+      return action.payload;
 
     case 'UPDATE':
       const updatableExpenseIndex = state.findIndex(
@@ -103,10 +107,14 @@ function expensesReducer(state, action) {
 }
 
 export default function ExpensesContextProvider({ children }) {
-  const [expenseState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
+  const [expenseState, dispatch] = useReducer(expensesReducer, []);
 
   function addExpense(expenseData) {
     dispatch({ type: 'ADD', payload: expenseData });
+  }
+
+  function setExpenses(expenses) {
+    dispatch({ type: 'SET', payload: expenses });
   }
 
   function deleteExpense(id) {
@@ -120,6 +128,7 @@ export default function ExpensesContextProvider({ children }) {
   const value = {
     expenses: expenseState,
     addExpense: addExpense,
+    setExpenses: setExpenses,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
   };
